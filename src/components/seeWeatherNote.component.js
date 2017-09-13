@@ -1,0 +1,106 @@
+import React, { Component } from "react";
+import { getTodaysNote, saveTodaysNote } from "../services/note.service";
+import {connect} from "react-redux";
+import {dispatchLogin} from "../actions/users.actions"
+import {Redirect, Link} from "react-router-dom";
+class seeWeatherNote extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dayNote:
+            {
+                date: 0,
+                note: "",
+                weather: {
+                    temp: 0.0,
+                    pressure: 0.0,
+                    humidity: 0.0,
+                    temp_min: 0.0,
+                    temp_max: 0.0
+                }
+            },
+            noUser : ""
+        }
+    }
+    noteChanged(e) {
+        this.setState({ dayNote: {...this.state.dayNote , note:e.target.value} });
+    }
+    componentWillMount() {
+        getTodaysNote().then(res => {
+            this.setState({dayNote:res.data})
+            //this.setState({ dayNote.date: new Date(this.state.date) })
+        }).catch(err => console.log(err));
+
+    }
+    submitClicked(e) {
+        e.preventDefault();
+        saveTodaysNote(this.state.dayNote).then(res => {
+            console.log(res.date);
+            this.setState({dayNote:res.data});
+
+        }).catch(err => {
+            console.log(err)
+        });
+
+    }
+    renderNote()
+    {
+        if(Object.keys(this.props.globalState.user).length === 0)
+        {
+            this.setState({noUser:"true"});
+            return (<div>
+                <p>
+                    You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
+                </p>
+                </div> 
+                );
+        }
+        if(this.props.globalState.user.role === "ROLE_ADMIN")
+        {
+            return (
+                <form> <input className="form-control" type="textfield" name="noteText" value={this.state.dayNote.note} onChange={this.noteChanged.bind(this)} ></input>
+                <button className="btn btn-primary" onClick={this.submitClicked.bind(this)}><i ></i>Update Note</button>
+            </form>
+            )
+        }
+        if(this.props.globalState.user.role === "ROLE_USER")
+        {
+            return (
+               <h2>
+                   {this.state.dayNote.note}
+               </h2>
+            )
+        }
+    }
+    render() {
+        if(this.state.noUser === "true")
+        {
+            return (
+                <div>
+                <p>
+                    You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
+                </p>
+                </div> 
+            );
+        }
+        return (
+            <div>
+                <h1>{(new Date(this.state.dayNote.date)).toDateString()}</h1>
+                {this.renderNote()}
+                <h3>Temperature: </h3><h3>{(this.state.dayNote.weather.temp - 273.15).toPrecision(4)}</h3>
+                <h3>Pressure: </h3><h3>{this.state.dayNote.weather.pressure}</h3>
+                <h3>Humidity: </h3><h3>{this.state.dayNote.weather.humidity}</h3>
+                <h3>Minimum - Temperature: </h3><h3>{(this.state.dayNote.weather.temp_min - 273.15).toPrecision(4)}</h3>
+                <h3>Maximum - Temperature: </h3><h3>{(this.state.dayNote.weather.temp_max - 273.15).toPrecision(4)}</h3>
+
+            </div>
+        );
+    }
+}
+function mapGlobalStateToProps(globalState) {
+    return {
+        globalState: globalState.user
+    };
+}
+export default connect(mapGlobalStateToProps, {  })(seeWeatherNote);
