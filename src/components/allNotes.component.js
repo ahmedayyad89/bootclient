@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import {getAllNotes} from "../services/note.service";
-export default class AllNotes extends Component{
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+class AllNotes extends Component{
     constructor(props)
     {
         super(props);
@@ -14,7 +16,11 @@ export default class AllNotes extends Component{
     {
         getAllNotes().then(res=>{
             this.setState({allNotes:res.data});
-        }).catch(err => console.log(err));
+        }).catch(err => {});
+        if(Object.keys(this.props.globalState.user).length === 0)
+        {
+            this.setState({noUser:true});
+        }
 
     }
     renderOldNotes()
@@ -22,9 +28,6 @@ export default class AllNotes extends Component{
         
         if(Object.keys(this.state.allNotes).length !== 0)
         {
-
-            console.log(this.state);
-            console.log(Object.keys(this.state.allNotes).length);
             return this.state.allNotes.map((note,index)=>{
             return(
                 <tr key = {index}>
@@ -46,6 +49,16 @@ export default class AllNotes extends Component{
     }
     render()
     {
+        if(this.state.noUser === true)
+        {
+            return (
+                <div>
+                <p>
+                    You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
+                </p>
+                </div> 
+            );
+        }
         return (
             <div className="table-responsive">
             <h4>All Notes Until Today</h4>
@@ -69,3 +82,10 @@ export default class AllNotes extends Component{
         
     }
 }
+
+function mapGlobalStateToProps(globalState) {
+    return {
+        globalState: globalState.user
+    };
+}
+export default connect(mapGlobalStateToProps, {  })(AllNotes);

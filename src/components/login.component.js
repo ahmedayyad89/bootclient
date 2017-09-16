@@ -10,8 +10,10 @@ class Login extends Component{
         this.state = {
             username : "",
             password : "",
-            redirect : ""
+            redirect : "", 
+            loginfailed: false 
         }
+
     }
     usernameChanged(e)
     {
@@ -27,18 +29,29 @@ class Login extends Component{
         login({username: this.state.username, password: this.state.password}).then (res=> {
             this.props.dispatchLogin(res.data);
             this.setState({redirect : "dayweather"});
-            console.log(res);
-        }).catch(function(error) {
-            console.log(error)
+        }).catch(error=> {
+            this.setState({loginfailed : true})
           }) 
 
+    }
+    loginError()
+    {
+        if(this.state.loginfailed)
+        {
+            return (
+                <div>
+                <p> Login Failed, check your credentials</p> 
+                </div>
+            );
+        }
     }
     logoutClicked(e)
     {
         e.preventDefault();
-        logout().then(res=> console.log(res)).catch(err=>console.log(err));
+        logout().then(res=> {}).catch(err=>{});
     }
     render() {
+        
         if(this.state.redirect === "dayweather")
         {
             return (
@@ -46,7 +59,6 @@ class Login extends Component{
             )
         }
         return (
-
             <div className="panel panel-default">
             <div className="panel-heading panel-heading-transparent">
                 <h2 className="panel-title bold">Login</h2>
@@ -56,7 +68,7 @@ class Login extends Component{
                 <div className="form-group">
                     <div className="row">
                         <div className="col-md-12">
-                    
+                    {this.loginError()}
                     <label htmlFor="username">
                         Email
                     </label>

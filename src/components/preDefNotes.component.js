@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 //import {getAllNotes} from "../services/note.service";
 import { getAllPreDefs, saveAllPreDefs } from "../services/predefnotes.service";
-export default class PreDefNotes extends Component {
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+class PreDefNotes extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -9,52 +11,58 @@ export default class PreDefNotes extends Component {
                 oneTo10:"",
             tenTo15:"",
             fifteenTo20:"",
-            moreThat20:""}
+            moreThat20:""}, 
+            noUser:false
         }
 
     }
     componentWillMount() {
 
         getAllPreDefs().then(res => {
-            console.log(res);
             this.setState({predef : res.data});
         }).catch(err => console.log(err));
+        if(Object.keys(this.props.globalState.user).length === 0)
+        {
+            this.setState({noUser:true});
+        }
 
     }
     oneTo10Changed(e)
     {
-        this.setState({ predef :{ ... this.state.predef , oneTo10 : e.target.value}});
+        this.setState({ predef :{...this.state.predef , oneTo10 : e.target.value}});
     }
     tenTo15Changed(e)
     {
-        this.setState({ predef :{ ... this.state.predef , tenTo15 : e.target.value}});
+        this.setState({ predef :{...this.state.predef , tenTo15 : e.target.value}});
     }
     fifteenTo20Changed(e)
     {
-        this.setState({ predef :{ ... this.state.predef , fifteenTo20 : e.target.value}});
+        this.setState({ predef :{...this.state.predef , fifteenTo20 : e.target.value}});
     }
     moreThat20Changed(e)
     {
-        this.setState({ predef :{ ... this.state.predef , moreThat20 : e.target.value}});
+        this.setState({ predef :{...this.state.predef , moreThat20 : e.target.value}});
     }
     updateClicked(e)
     {
         e.preventDefault();
-        saveAllPreDefs(this.state.predef
-        //     {
-        //     "oneTo10":this.state.oneTo10,
-        //     "tenTo15":this.state.tenTo15,
-        //     "fifteenTo20":this.state.fifteenTo20,
-        //     "moreThat20":this.state.moreThat20
-        // }
-    ).then(res=>{
+        saveAllPreDefs(this.state.predef).then(res=>{
             this.setState(res.data);
-            console.log(res);
-        }).catch(err=>console.log(err))
+        }).catch(err=>{})
     }
 
+
     render() {
-        
+        if(this.state.noUser === true)
+        {
+            return (
+                <div>
+                <p>
+                    You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
+                </p>
+                </div> 
+            );
+        }
         return (
             <div className="panel panel-default">
                 <div className="panel-heading panel-heading-transparent">
@@ -116,3 +124,9 @@ export default class PreDefNotes extends Component {
 
     }
 }
+function mapGlobalStateToProps(globalState) {
+    return {
+        globalState: globalState.user
+    };
+}
+export default connect(mapGlobalStateToProps, {  })(PreDefNotes);

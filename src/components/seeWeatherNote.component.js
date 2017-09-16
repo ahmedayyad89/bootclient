@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { getTodaysNote, saveTodaysNote } from "../services/note.service";
 import {connect} from "react-redux";
-import {dispatchLogin} from "../actions/users.actions"
-import {Redirect, Link} from "react-router-dom";
-class seeWeatherNote extends Component {
+import {Link} from "react-router-dom";
+class SeeWeatherNote extends Component {
 
     constructor(props) {
         super(props);
@@ -29,19 +28,14 @@ class seeWeatherNote extends Component {
     componentWillMount() {
         getTodaysNote().then(res => {
             this.setState({dayNote:res.data})
-            //this.setState({ dayNote.date: new Date(this.state.date) })
-        }).catch(err => console.log(err));
+        }).catch(err => {});
 
     }
     submitClicked(e) {
         e.preventDefault();
         saveTodaysNote(this.state.dayNote).then(res => {
-            console.log(res.date);
             this.setState({dayNote:res.data});
-
-        }).catch(err => {
-            console.log(err)
-        });
+        }).catch(err => {});
 
     }
     renderNote()
@@ -49,12 +43,7 @@ class seeWeatherNote extends Component {
         if(Object.keys(this.props.globalState.user).length === 0)
         {
             this.setState({noUser:"true"});
-            return (<div>
-                <p>
-                    You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
-                </p>
-                </div> 
-                );
+            return (<div/>);
         }
         if(this.props.globalState.user.role === "ROLE_ADMIN")
         {
@@ -103,4 +92,4 @@ function mapGlobalStateToProps(globalState) {
         globalState: globalState.user
     };
 }
-export default connect(mapGlobalStateToProps, {  })(seeWeatherNote);
+export default connect(mapGlobalStateToProps, {  })(SeeWeatherNote);

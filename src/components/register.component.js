@@ -8,6 +8,7 @@ class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name:"",
             username: "",
             password: "",
             mobileNumber: "",
@@ -24,24 +25,27 @@ class Register extends Component {
     mobileNumberChanged(e) {
         this.setState({ mobileNumber: e.target.value })
     }
+    nameChanged(e)
+    {
+        this.setState({ name: e.target.value })
+    }
     registerClicked(e) {
         e.preventDefault();
-        register({username : this.state.username, 
+        register({
+            name:this.state.name,
+            username : this.state.username, 
             password:this.state.password, 
             mobileNumber:this.state.mobileNumber,
-            role:this.state.role}).then(res => {
-            console.log(res);
+            role:this.state.role
+        }).then(res => {
             login({ username: this.state.username, password: this.state.password })
                 .then(res => {
                     this.props.dispatchLogin(res.data);
                     this.setState({redirect : "dayweather"});
-                    console.log(res);
                 })
-                .catch(err => console.log(err))
+                .catch(err => {})
 
-        }).catch(function (error) {
-            console.log(error)
-        })
+        }).catch(err=>{})
 
     }
     render() {
@@ -60,6 +64,15 @@ class Register extends Component {
                     <form>
                         <div className="form-group">
                             <div className="row">
+                            <div className="col-md-12">
+                                    <label htmlFor="name">
+                                        Name
+                    </label>
+                                    <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.nameChanged.bind(this)} >
+                                    </input>
+                                </div>
+                                </div>
+                                <div className="row">
                                 <div className="col-md-12">
                                     <label htmlFor="username">
                                         Email

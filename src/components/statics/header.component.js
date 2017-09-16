@@ -2,20 +2,15 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import {logout} from "../../services/login.service";
 import {connect} from "react-redux";
-import { dispatchLogout} from "../../actions/users.actions"
-import {Redirect} from "react-router-dom";
+import {dispatchLogout} from "../../actions/users.actions";
  class HeaderComponent extends Component{
 
 
 
     logoutClicked(e)
     {
-       // e.preventDefault();
-        logout().then(
-            res=> {
-                this.props.dispatchLogout();
-                console.log(res)
-            }).catch(err=>console.log(err));
+        logout().then(res=> {}).catch(err=>console.log(err));
+            this.props.dispatchLogout();
     }
 
     renderChoices()
@@ -88,41 +83,15 @@ import {Redirect} from "react-router-dom";
             <div id="header" className="sticky clearfix">
             <header id="topNav">
                 <div className="container">
-                   
                     <button className="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
                                 <i className="fa fa-bars"></i>
                     </button>
-                    
                     <Link className="logo pull-left scrollTo" to="/">
                         <img src="Orange-logo.png" alt="" />
                     </Link>
-    
-                    
-                    <div className="navbar-collapse pull-right nav-main-collapse collapse submenu-dark">
+                    <div className="pull-right navbar-collapse  nav-main-collapse collapse submenu-dark">
                         <nav className="nav-main">
-
-                                {/* <li>
-                                    <a href="#">HOME</a>
-                                </li> */}
-                            
-                            {/* <ul id="topMain" className="nav nav-pills nav-main"> */}
-                                {/* <li>
-                                    <Link to="/login">
-                                        Login
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/dayweather">
-                                            Today's Weather
-                                    </Link>
-                                </li>
-                                <li >
-                                <Link to="/" onClick={this.logoutClicked.bind(this)}>
-                                    Logout
-                                    </Link>
-                                </li> */}
                                 {this.renderChoices()}
-                            {/* </ul> */}
                         </nav>
                     </div>
                 </div>
