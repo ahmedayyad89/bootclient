@@ -32,8 +32,10 @@ class Login extends Component {
     loginError() {
         if (this.state.loginfailed) {
             return (
-                <div>
-                    <p> Login Failed, check your credentials</p>
+                <div className="row">
+                    <div className="col-md-12">
+                        <p style={{ color: 'red' }}>Login Failed, check your credentials</p>
+                    </div>
                 </div>
             );
         }
@@ -57,9 +59,9 @@ class Login extends Component {
                 <div className="panel-body">
                     <form>
                         <div className="form-group">
+                            {this.loginError()}
                             <div className="row">
                                 <div className="col-md-12">
-                                    {this.loginError()}
                                     <label htmlFor="username">
                                         Email
                     </label>

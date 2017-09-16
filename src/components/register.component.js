@@ -13,7 +13,8 @@ class Register extends Component {
             password: "",
             mobileNumber: "",
             role: "ROLE_USER",
-            redirect : ""
+            redirect : "", 
+            registerationFailed:false
         }
     }
     usernameChanged(e) {
@@ -45,8 +46,22 @@ class Register extends Component {
                 })
                 .catch(err => {})
 
-        }).catch(err=>{})
+        }).catch(err=>{
+            this.setState({registerationFailed:true})
+        })
 
+    }
+    renderFailure()
+    {
+        if (this.state.registerationFailed === true) {
+            return (
+                <div className="row">
+                    <div className="col-md-12">
+                        <p style={{ color: 'red' }}>Registeration Failed, Check your information.</p>
+                    </div>
+                </div>
+            );
+        }
     }
     render() {
         if(this.state.redirect === "dayweather")
@@ -63,6 +78,7 @@ class Register extends Component {
                 <div className="panel-body">
                     <form>
                         <div className="form-group">
+                            {this.renderFailure()}
                             <div className="row">
                             <div className="col-md-12">
                                     <label htmlFor="name">

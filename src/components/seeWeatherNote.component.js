@@ -19,15 +19,17 @@ class SeeWeatherNote extends Component {
                     temp_max: 0.0
                 }
             },
-            noUser : ""
-        }
+            noUser : "", 
+            loaded : false
+        };
     }
     noteChanged(e) {
         this.setState({ dayNote: {...this.state.dayNote , note:e.target.value} });
     }
     componentWillMount() {
         getTodaysNote().then(res => {
-            this.setState({dayNote:res.data})
+            this.setState({dayNote:res.data});
+            this.setState({loaded:true})
         }).catch(err => {});
 
     }
@@ -71,6 +73,15 @@ class SeeWeatherNote extends Component {
                     You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
                 </p>
                 </div> 
+            );
+        }
+        if(this.state.loaded !== true)
+        {
+            return(
+            <div>
+            {/* <img src="../../logo.svg"/> */}
+            <h1>Loading...</h1>
+            </div>
             );
         }
         return (
