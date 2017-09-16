@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { dispatchLogin } from "../actions/users.actions";
 import { Redirect } from "react-router-dom";
+import axios from "axios";
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,11 @@ class Login extends Component {
     loginClicked(e) {
         e.preventDefault();
         login({ username: this.state.username, password: this.state.password }).then(res => {
+            console.log(res);
             this.props.dispatchLogin(res.data);
+            //axios.defaults.headers.common['Authorization'] = res.config.headers.Authorization;
+            //window.localStorage.setItem('user', res.data);
+
             this.setState({ redirect: "dayweather" });
         }).catch(error => {
             this.setState({ loginfailed: true })
@@ -42,7 +47,10 @@ class Login extends Component {
     }
     logoutClicked(e) {
         e.preventDefault();
-        logout().then(res => { }).catch(err => { });
+        logout().then(res => { 
+            //window.localStorage.removeItem('user');
+            //axios.defaults.headers.common['Authorization'] = null;
+        }).catch(err => { });
     }
     render() {
 

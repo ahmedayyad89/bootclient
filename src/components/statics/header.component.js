@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../services/login.service";
 import { connect } from "react-redux";
-import { dispatchLogout } from "../../actions/users.actions";
+import { dispatchLogout, dispatchLogin } from "../../actions/users.actions";
+import axios from "axios";
 class HeaderComponent extends Component {
 
 
@@ -11,7 +12,16 @@ class HeaderComponent extends Component {
         logout().then(res => { }).catch(err => console.log(err));
         this.props.dispatchLogout();
     }
-
+    componentWillMount() {
+        /*var user = window.localStorage.getItem('user');
+        var authToken = window.localStorage.getItem('auth');
+        if (user !== null) {
+            this.props.dispatchLogin(user);
+        }
+        if (authToken !== null) {
+            axios.defaults.headers.common['Authorization'] = authToken;
+        }*/
+    }
     renderChoices() {
         if (Object.keys(this.props.globalState.user).length === 0) {
             return (
@@ -101,4 +111,4 @@ function mapGlobalStateToProps(globalState) {
         globalState: globalState.user
     };
 }
-export default connect(mapGlobalStateToProps, { dispatchLogout })(HeaderComponent);
+export default connect(mapGlobalStateToProps, { dispatchLogout, dispatchLogin })(HeaderComponent);
