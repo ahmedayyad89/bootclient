@@ -1,33 +1,31 @@
-import { login, logout } from "../services/login.service";
+import { login } from "../services/login.service";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { dispatchLogin } from "../actions/users.actions";
 import { Redirect } from "react-router-dom";
-import axios from "axios";
+ import axios from "axios";
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
+            email: "",
             password: "",
             redirect: "",
             loginfailed: false
         }
     }
-    usernameChanged(e) {
-        this.setState({ username: e.target.value })
+    emailChanged(e) {
+        this.setState({ email: e.target.value })
     }
     passwordChanged(e) {
         this.setState({ password: e.target.value })
     }
     loginClicked(e) {
         e.preventDefault();
-        login({ username: this.state.username, password: this.state.password }).then(res => {
-            console.log(res);
+        login({ username: this.state.email, password: this.state.password }).then(res => {
             this.props.dispatchLogin(res.data);
-            //axios.defaults.headers.common['Authorization'] = res.config.headers.Authorization;
-            //window.localStorage.setItem('user', res.data);
-
+            window.localStorage.setItem('user', JSON.stringify(res.data));
+            window.localStorage.setItem('auth', res.config.headers.Authorization);
             this.setState({ redirect: "dayweather" });
         }).catch(error => {
             this.setState({ loginfailed: true })
@@ -45,16 +43,9 @@ class Login extends Component {
             );
         }
     }
-    logoutClicked(e) {
-        e.preventDefault();
-        logout().then(res => { 
-            //window.localStorage.removeItem('user');
-            //axios.defaults.headers.common['Authorization'] = null;
-        }).catch(err => { });
-    }
     render() {
 
-        if (this.state.redirect === "dayweather") {
+        if (this.state.redirect === "dayweather" || Object.keys(this.props.globalState.user).length > 0) {
             return (
                 <Redirect to="/dayweather" />
             )
@@ -70,10 +61,10 @@ class Login extends Component {
                             {this.loginError()}
                             <div className="row">
                                 <div className="col-md-12">
-                                    <label htmlFor="username">
+                                    <label htmlFor="email">
                                         Email
                     </label>
-                                    <input type="email" name="username" className="form-control" value={this.state.username} onChange={this.usernameChanged.bind(this)} >
+                                    <input type="email" name="email" className="form-control" value={this.state.email} onChange={this.emailChanged.bind(this)} >
                                     </input>
                                 </div>
                             </div>

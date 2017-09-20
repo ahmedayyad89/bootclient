@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getTodaysNote, saveTodaysNote } from "../services/note.service";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 class SeeWeatherNote extends Component {
 
     constructor(props) {
@@ -27,6 +27,10 @@ class SeeWeatherNote extends Component {
         this.setState({ dayNote: {...this.state.dayNote , note:e.target.value} });
     }
     componentWillMount() {
+        if(Object.keys(this.props.globalState.user).length === 0)
+        {
+            this.setState({noUser:"true"});
+        }
         getTodaysNote().then(res => {
             this.setState({dayNote:res.data});
             this.setState({loaded:true})
@@ -75,6 +79,7 @@ class SeeWeatherNote extends Component {
                 </div> 
             );
         }
+        
         if(this.state.loaded !== true)
         {
             return(

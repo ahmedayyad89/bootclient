@@ -9,7 +9,7 @@ class Register extends Component {
         super(props);
         this.state = {
             name:"",
-            username: "",
+            email: "",
             password: "",
             mobileNumber: "",
             role: "ROLE_USER",
@@ -17,8 +17,8 @@ class Register extends Component {
             registerationFailed:false
         }
     }
-    usernameChanged(e) {
-        this.setState({ username: e.target.value })
+    emailChanged(e) {
+        this.setState({ email: e.target.value })
     }
     passwordChanged(e) {
         this.setState({ password: e.target.value })
@@ -34,14 +34,16 @@ class Register extends Component {
         e.preventDefault();
         register({
             name:this.state.name,
-            username : this.state.username, 
+            email : this.state.email, 
             password:this.state.password, 
             mobileNumber:this.state.mobileNumber,
             role:this.state.role
         }).then(res => {
-            login({ username: this.state.username, password: this.state.password })
+            login({ username: this.state.email, password: this.state.password })
                 .then(res => {
                     this.props.dispatchLogin(res.data);
+                    window.localStorage.setItem('user', JSON.stringify(res.data));
+                    window.localStorage.setItem('auth', res.config.headers.Authorization);
                     this.setState({redirect : "dayweather"});
                 })
                 .catch(err => {})
@@ -90,10 +92,10 @@ class Register extends Component {
                                 </div>
                                 <div className="row">
                                 <div className="col-md-12">
-                                    <label htmlFor="username">
+                                    <label htmlFor="email">
                                         Email
                     </label>
-                                    <input type="email" className="form-control" name="username" value={this.state.username} onChange={this.usernameChanged.bind(this)} >
+                                    <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.emailChanged.bind(this)} >
                                     </input>
                                 </div>
                             </div>

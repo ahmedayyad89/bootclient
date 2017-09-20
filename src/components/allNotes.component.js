@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {getAllNotes} from "../services/note.service";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 class AllNotes extends Component{
     constructor(props)
     {
@@ -17,10 +17,6 @@ class AllNotes extends Component{
         getAllNotes().then(res=>{
             this.setState({allNotes:res.data});
         }).catch(err => {});
-        if(Object.keys(this.props.globalState.user).length === 0)
-        {
-            this.setState({noUser:true});
-        }
 
     }
     renderOldNotes()
@@ -49,7 +45,7 @@ class AllNotes extends Component{
     }
     render()
     {
-        if(this.state.noUser === true)
+        if(Object.keys(this.props.globalState.user).length === 0)
         {
             return (
                 <div>
@@ -58,6 +54,12 @@ class AllNotes extends Component{
                 </p>
                 </div> 
             );
+        }
+        if(this.props.globalState.user.role !== "ROLE_ADMIN")
+        {
+            return (
+                <Redirect to="/dayweather" />
+            )
         }
         return (
             <div className="table-responsive">

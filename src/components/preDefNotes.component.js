@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import {getAllNotes} from "../services/note.service";
 import { getAllPreDefs, saveAllPreDefs } from "../services/predefnotes.service";
 import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 class PreDefNotes extends Component {
     constructor(props) {
         super(props);
@@ -20,12 +20,8 @@ class PreDefNotes extends Component {
 
         getAllPreDefs().then(res => {
             this.setState({predef : res.data});
-        }).catch(err => console.log(err));
-        if(Object.keys(this.props.globalState.user).length === 0)
-        {
-            this.setState({noUser:true});
-        }
-
+        }).catch(err => {});
+        
     }
     oneTo10Changed(e)
     {
@@ -53,7 +49,7 @@ class PreDefNotes extends Component {
 
 
     render() {
-        if(this.state.noUser === true)
+        if(Object.keys(this.props.globalState.user).length === 0)
         {
             return (
                 <div>
@@ -62,6 +58,12 @@ class PreDefNotes extends Component {
                 </p>
                 </div> 
             );
+        }
+        if(this.props.globalState.user.role !== "ROLE_ADMIN")
+        {
+            return (
+                <Redirect to="/dayweather" />
+            )
         }
         return (
             <div className="panel panel-default">
