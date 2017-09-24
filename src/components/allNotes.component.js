@@ -7,7 +7,7 @@ class AllNotes extends Component{
     {
         super(props);
         this.state={
-            allNotes:{}
+            allNotes:[]
 
         }
 
@@ -21,15 +21,16 @@ class AllNotes extends Component{
     }
     renderOldNotes()
     {
-        
-        if(Object.keys(this.state.allNotes).length !== 0)
+        //console.log(this.state.allNotes);
+        if(this.state.allNotes.length != 0)
         {
+            //console.log(this.state.allNotes)
             return this.state.allNotes.map((note,index)=>{
             return(
                 <tr key = {index}>
                 <td>{(new Date(note.date)).toDateString()}</td>
-                <td>{(note.weather.temp_min - 273.1).toPrecision(2)}</td>
-                <td>{(note.weather.temp_max - 273.1).toPrecision(2)}</td>
+                <td>{(note.weatherModel.temp_min - 273.1).toPrecision(2)}</td>
+                <td>{(note.weatherModel.temp_max - 273.1).toPrecision(2)}</td>
                 <td>{note.note}</td>
             </tr>);
             });

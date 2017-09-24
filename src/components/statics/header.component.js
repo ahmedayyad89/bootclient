@@ -36,12 +36,12 @@ class HeaderComponent extends Component {
                     <li>
                         <Link to="/login">
                             Login
-            </Link>
+                        </Link>
                     </li>
                     <li>
                         <Link to="/register">
                             Register
-                </Link>
+                        </Link>
                     </li>
                 </ul>
             );
@@ -52,22 +52,22 @@ class HeaderComponent extends Component {
                     <li>
                         <Link to="/predefnotes">
                             Predefined Notes
-                                    </Link>
+                        </Link>
                     </li>
                     <li>
                         <Link to="/allnotes">
                             All Notes
-                                    </Link>
+                        </Link>
                     </li>
                     <li>
                         <Link to="/dayweather">
                             Today's Weather
-                                    </Link>
+                        </Link>
                     </li>
                     <li >
                         <Link to="/" onClick={this.logoutClicked.bind(this)}>
                             Logout
-                                    </Link>
+                        </Link>
                     </li>
                 </ul>
             )
@@ -79,12 +79,12 @@ class HeaderComponent extends Component {
                     <li>
                         <Link to="/dayweather">
                             Today's Weather
-                                    </Link>
+                        </Link>
                     </li>
                     <li >
                         <Link to="/" onClick={this.logoutClicked.bind(this)}>
                             Logout
-                                    </Link>
+                        </Link>
                     </li>
                 </ul>
             )
