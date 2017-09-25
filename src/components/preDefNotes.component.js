@@ -7,11 +7,7 @@ class PreDefNotes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            predef:{
-                oneTo10:"",
-            tenTo15:"",
-            fifteenTo20:"",
-            moreThat20:""}, 
+            predef:[], 
             noUser:false
         }
 
@@ -23,22 +19,7 @@ class PreDefNotes extends Component {
         }).catch(err => {});
         
     }
-    oneTo10Changed(e)
-    {
-        this.setState({ predef :{...this.state.predef , oneTo10 : e.target.value}});
-    }
-    tenTo15Changed(e)
-    {
-        this.setState({ predef :{...this.state.predef , tenTo15 : e.target.value}});
-    }
-    fifteenTo20Changed(e)
-    {
-        this.setState({ predef :{...this.state.predef , fifteenTo20 : e.target.value}});
-    }
-    moreThat20Changed(e)
-    {
-        this.setState({ predef :{...this.state.predef , moreThat20 : e.target.value}});
-    }
+    
     updateClicked(e)
     {
         e.preventDefault();
@@ -46,7 +27,28 @@ class PreDefNotes extends Component {
             this.setState(res.data);
         }).catch(err=>{})
     }
+    renderPredefs()
+    {
+        
+        return this.state.predef.map((predef,index)=>
+    {
+       return (
+        <div className="row">
+        <div className="col-md-12">
 
+            <label htmlFor={index.toString()}>
+                {this.state.predef[index].minimumTemperture} - {this.state.predef[index].maximumTemperture}
+</label>
+            <input type="text" name={index.toString()} className="form-control" value={this.state.predef[index].message} onChange={((e)=>{
+                let notes = this.state.predef;
+                notes[index].message = e.target.value;
+                this.setState({predef: notes});
+            })} />
+        </div>
+    </div>
+       ) 
+    })
+    }
 
     render() {
         if(Object.keys(this.props.globalState.user).length === 0)
@@ -73,42 +75,7 @@ class PreDefNotes extends Component {
                 <div className="panel-body">
                     <form>
                         <div className="form-group">
-                            <div className="row">
-                                <div className="col-md-12">
-
-                                    <label htmlFor="oneTo10">
-                                        1 - 10
-                    </label>
-                                    <input type="text" name="oneTo10" className="form-control" value={this.state.predef.oneTo10} onChange={this.oneTo10Changed.bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-
-                                    <label htmlFor="tenTo15">
-                                        10 - 15
-            </label>
-                                    <input type="text" name="tenTo15" className="form-control" value={this.state.predef.tenTo15} onChange={this.tenTo15Changed.bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-
-                                    <label htmlFor="fifteenTo20">
-                                        15 - 20
-                    </label>
-                                    <input type="text" name="fifteenTo20" className="form-control" value={this.state.predef.fifteenTo20} onChange={this.fifteenTo20Changed.bind(this)} />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-
-                                    <label htmlFor="moreThat20">
-                                        20 -
-                    </label>
-                                    <input type="text" name="moreThat20" className="form-control" value={this.state.predef.moreThat20} onChange={this.moreThat20Changed.bind(this)} />
-                                </div>
-                            </div>
+                            {this.renderPredefs()}
                             <div className="row">
                                 <div className="col-md-3">
                                     <br />
