@@ -39,7 +39,7 @@ class SeeWeatherNote extends Component {
     }
     submitClicked(e) {
         e.preventDefault();
-        saveTodaysNote(this.state.dayNote).then(res => {
+        saveTodaysNote({note : this.state.dayNote.note}).then(res => {
             this.setState({dayNote:res.data});
         }).catch(err => {});
 

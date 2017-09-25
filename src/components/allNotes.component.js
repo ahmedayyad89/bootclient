@@ -22,7 +22,7 @@ class AllNotes extends Component{
     renderOldNotes()
     {
         //console.log(this.state.allNotes);
-        if(this.state.allNotes.length != 0)
+        if(this.state.allNotes.length !== 0)
         {
             //console.log(this.state.allNotes)
             return this.state.allNotes.map((note,index)=>{

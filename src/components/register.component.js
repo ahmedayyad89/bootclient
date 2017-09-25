@@ -12,7 +12,6 @@ class Register extends Component {
             email: "",
             password: "",
             mobileNumber: "",
-            role: "ROLE_USER",
             redirect : "", 
             registerationFailed:false
         }
@@ -36,8 +35,7 @@ class Register extends Component {
             name:this.state.name,
             email : this.state.email, 
             password:this.state.password, 
-            mobileNumber:this.state.mobileNumber,
-            role:this.state.role
+            mobileNumber:this.state.mobileNumber
         }).then(res => {
             login({ username: this.state.email, password: this.state.password })
                 .then(res => {
@@ -46,9 +44,11 @@ class Register extends Component {
                     window.localStorage.setItem('auth', res.config.headers.Authorization);
                     this.setState({redirect : "dayweather"});
                 })
-                .catch(err => {})
+                .catch(err => {console.log(err)})
 
         }).catch(err=>{
+            console.log(err.response)
+
             this.setState({registerationFailed:true})
         })
 
