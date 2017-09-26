@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:8080/user"
+const BASE_URL = "http://localhost:80/user"
 
 export function login(credentials)
 {
