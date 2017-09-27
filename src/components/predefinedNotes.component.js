@@ -26,20 +26,27 @@ class predefinedNotes extends Component {
     }
 
     makeBindingMethods() {
+        console.log(this.state.predefinedNotes);
         let bindingMethodsHolder = this.state.predefinedNotes.map((predef, index) => {
             return ((e) => {
                 let notes = this.state.predefinedNotes;
                 notes[index].message = e.target.value;
                 this.setState({ predefinedNotes: notes });
-            })
+            }).bind(this);
         });
+        console.log(bindingMethodsHolder);
         this.setState({ bindingMethods: bindingMethodsHolder })
 
     }
 
     renderPredefinedNotes() {
+       
+        if(this.state.bindingMethods === undefined)
+        {
+            this.makeBindingMethods();
+        }
         if (this.state.predefinedNotes.length > 0
-            && (this.state.bindingMethods === undefined || this.state.bindingMethods.length !== this.state.predefinedNotes.length)) {
+            && this.state.bindingMethods.length !== this.state.predefinedNotes.length) {
             this.makeBindingMethods();
         }
         return this.state.predefinedNotes.map((predef, index) => {
@@ -51,7 +58,7 @@ class predefinedNotes extends Component {
                             {this.state.predefinedNotes[index].minimumTemperature} - {this.state.predefinedNotes[index].maximumTemperature}
                         </label>
                         <input type="text" name={index.toString()} className="form-control" value={this.state.predefinedNotes[index].message} 
-                        onChange={this.state.bindingMethods[index].bind(this)} />
+                        onChange={this.state.bindingMethods[index]} />
                     </div>
                 </div>
             )
