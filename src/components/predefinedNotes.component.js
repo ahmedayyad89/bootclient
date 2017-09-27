@@ -26,7 +26,6 @@ class predefinedNotes extends Component {
     }
 
     makeBindingMethods() {
-        console.log(this.state.predefinedNotes);
         let bindingMethodsHolder = this.state.predefinedNotes.map((predef, index) => {
             return ((e) => {
                 let notes = this.state.predefinedNotes;
@@ -34,7 +33,6 @@ class predefinedNotes extends Component {
                 this.setState({ predefinedNotes: notes });
             }).bind(this);
         });
-        console.log(bindingMethodsHolder);
         this.setState({ bindingMethods: bindingMethodsHolder })
 
     }
