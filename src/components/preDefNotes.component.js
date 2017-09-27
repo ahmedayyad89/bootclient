@@ -33,10 +33,10 @@ class PreDefNotes extends Component {
         return this.state.predef.map((predef,index)=>
     {
        return (
-        <div className="row">
+        <div className="row" key = {index}>
         <div className="col-md-12">
 
-            <label htmlFor={index.toString()}>
+            <label htmlFor={index.toString()} >
                 {this.state.predef[index].minimumTemperature} - {this.state.predef[index].maximumTemperature}
 </label>
             <input type="text" name={index.toString()} className="form-control" value={this.state.predef[index].message} onChange={((e)=>{
