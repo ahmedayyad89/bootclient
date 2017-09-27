@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { getAllPredefinedNotes, saveAllPredefinedNotes } from "../services/predefnotes.service";
+import { getAllPredefinedNotes, saveAllPredefinedNotes } from "../services/predefinedNotes.service";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 class predefinedNotes extends Component {
