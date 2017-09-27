@@ -29,8 +29,8 @@ class AllNotes extends Component{
             return(
                 <tr key = {index}>
                 <td>{(new Date(note.date)).toDateString()}</td>
-                <td>{(note.weatherModel.temp_min - 273.1).toPrecision(2)}</td>
-                <td>{(note.weatherModel.temp_max - 273.1).toPrecision(2)}</td>
+                <td>{(note.weatherModel.temp_min).toPrecision(2)}</td>
+                <td>{(note.weatherModel.temp_max).toPrecision(2)}</td>
                 <td>{note.note}</td>
             </tr>);
             });
