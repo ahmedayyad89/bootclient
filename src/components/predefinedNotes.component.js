@@ -31,21 +31,23 @@ class predefinedNotes extends Component {
                 let notes = this.state.predefinedNotes;
                 notes[index].message = e.target.value;
                 this.setState({ predefinedNotes: notes });
-            }).bind(this)
+            }).bind(this);
         });
         this.setState({ bindingMethods: bindingMethodsHolder })
 
     }
 
     renderPredefinedNotes() {
+       
+        if(this.state.bindingMethods === undefined)
+        {
+            this.makeBindingMethods();
+        }
         if (this.state.predefinedNotes.length > 0
-            && (this.state.bindingMethods === undefined ||
-                 this.state.bindingMethods.length !== this.state.predefinedNotes.length)) {
+            && this.state.bindingMethods.length !== this.state.predefinedNotes.length) {
             this.makeBindingMethods();
         }
         return this.state.predefinedNotes.map((predef, index) => {
-            console.log(predef)
-            console.log(index)
             return (
                 <div className="row" key={index}>
                     <div className="col-md-12">
