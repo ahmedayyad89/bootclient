@@ -37,7 +37,7 @@ class PreDefNotes extends Component {
         <div className="col-md-12">
 
             <label htmlFor={index.toString()}>
-                {this.state.predef[index].minimumTemperture} - {this.state.predef[index].maximumTemperture}
+                {this.state.predef[index].minimumTemperature} - {this.state.predef[index].maximumTemperature}
 </label>
             <input type="text" name={index.toString()} className="form-control" value={this.state.predef[index].message} onChange={((e)=>{
                 let notes = this.state.predef;

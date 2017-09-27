@@ -93,11 +93,11 @@ class SeeWeatherNote extends Component {
             <div>
                 <h1>{(new Date(this.state.dayNote.date)).toDateString()}</h1>
                 {this.renderNote()}
-                <h3>Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp - 273.15).toPrecision(4)}</h3>
+                <h3>Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp).toPrecision(4)}</h3>
                 <h3>Pressure: </h3><h3>{this.state.dayNote.weatherModel.pressure}</h3>
                 <h3>Humidity: </h3><h3>{this.state.dayNote.weatherModel.humidity}</h3>
-                <h3>Minimum - Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp_min - 273.15).toPrecision(4)}</h3>
-                <h3>Maximum - Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp_max - 273.15).toPrecision(4)}</h3>
+                <h3>Minimum - Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp_min).toPrecision(4)}</h3>
+                <h3>Maximum - Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp_max).toPrecision(4)}</h3>
 
             </div>
         );
