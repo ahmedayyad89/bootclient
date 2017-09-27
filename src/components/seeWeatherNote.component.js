@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { getTodaysNote, saveTodaysNote } from "../services/note.service";
 import {connect} from "react-redux";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 class SeeWeatherNote extends Component {
 
     constructor(props) {
