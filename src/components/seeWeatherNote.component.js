@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { getTodaysNote, saveTodaysNote } from "../services/note.service";
-import {connect} from "react-redux";
-import {Link} from "react-router-dom";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 class SeeWeatherNote extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -19,74 +18,67 @@ class SeeWeatherNote extends Component {
                     temp_max: 0.0
                 }
             },
-            noUser : "", 
-            loaded : false
+            noUser: "",
+            loaded: false
         };
     }
     noteChanged(e) {
-        this.setState({ dayNote: {...this.state.dayNote , note:e.target.value} });
+        this.setState({ dayNote: { ...this.state.dayNote, note: e.target.value } });
     }
     componentWillMount() {
-        if(Object.keys(this.props.globalState.user).length === 0)
-        {
-            this.setState({noUser:"true"});
+        if (Object.keys(this.props.globalState.user).length === 0) {
+            this.setState({ noUser: "true" });
         }
         getTodaysNote().then(res => {
-            this.setState({dayNote:res.data});
-            this.setState({loaded:true})
-        }).catch(err => {});
+            this.setState({ dayNote: res.data });
+            this.setState({ loaded: true })
+        }).catch(err => { });
 
     }
     submitClicked(e) {
         e.preventDefault();
-        saveTodaysNote({note : this.state.dayNote.note}).then(res => {
-            this.setState({dayNote:res.data});
-        }).catch(err => {});
+        saveTodaysNote({ note: this.state.dayNote.note }).then(res => {
+            this.setState({ dayNote: res.data });
+        }).catch(err => { });
 
     }
-    renderNote()
-    {
-        if(Object.keys(this.props.globalState.user).length === 0)
-        {
-            this.setState({noUser:"true"});
-            return (<div/>);
+    renderNote() {
+        if (Object.keys(this.props.globalState.user).length === 0) {
+            this.setState({ noUser: "true" });
+            return (<div />);
         }
-        if(this.props.globalState.user.role === "ROLE_ADMIN")
-        {
+        if (this.props.globalState.user.role === "ROLE_ADMIN") {
             return (
                 <form> <input className="form-control" type="textfield" name="noteText" value={this.state.dayNote.note} onChange={this.noteChanged.bind(this)} ></input>
-                <button className="btn btn-primary" onClick={this.submitClicked.bind(this)}><i ></i>Update Note</button>
-            </form>
+                    <button className="btn btn-primary" onClick={this.submitClicked.bind(this)}><i ></i>Update Note</button>
+                </form>
             )
         }
-        if(this.props.globalState.user.role === "ROLE_USER")
-        {
+        if (this.props.globalState.user.role === "ROLE_USER") {
             return (
-               <h2>
-                   {this.state.dayNote.note}
-               </h2>
+                <h2>
+                    {this.state.dayNote.note}
+                </h2>
             )
         }
     }
     render() {
-        if(this.state.noUser === "true")
-        {
+        if (this.state.noUser === "true") {
             return (
                 <div>
-                <p>
-                    You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
+                    <p>
+                        You're not logged in, please go to <Link to="/login">Login</Link> and enter your credetials.
                 </p>
-                </div> 
+                </div>
             );
         }
-        
-        if(this.state.loaded !== true)
-        {
-            return(
-            <div>
-            {/* <img src="../../logo.svg"/> */}
-            <h1>Loading...</h1>
-            </div>
+
+        if (this.state.loaded !== true) {
+            return (
+                <div>
+                    {/* <img src="../../logo.svg"/> */}
+                    <h1>Loading...</h1>
+                </div>
             );
         }
         return (
@@ -108,4 +100,4 @@ function mapGlobalStateToProps(globalState) {
         globalState: globalState.user
     };
 }
-export default connect(mapGlobalStateToProps, {  })(SeeWeatherNote);
+export default connect(mapGlobalStateToProps, {})(SeeWeatherNote);

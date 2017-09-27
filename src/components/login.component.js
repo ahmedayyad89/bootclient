@@ -19,7 +19,7 @@ class Login extends Component {
     passwordChanged(e) {
         this.setState({ password: e.target.value })
     }
-    loginClicked(e) {
+    loginOnClicked(e) {
         e.preventDefault();
         login({ username: this.state.email, password: this.state.password }).then(res => {
             this.props.dispatchLogin(res.data);
@@ -31,7 +31,7 @@ class Login extends Component {
         })
 
     }
-    loginError() {
+    loginOnError() {
         if (this.state.loginfailed) {
             return (
                 <div className="row">
@@ -43,7 +43,6 @@ class Login extends Component {
         }
     }
     render() {
-
         if (this.state.redirect === "dayweather" || Object.keys(this.props.globalState.user).length > 0) {
             return (
                 <Redirect to="/dayweather" />
@@ -57,7 +56,7 @@ class Login extends Component {
                 <div className="panel-body">
                     <form>
                         <div className="form-group">
-                            {this.loginError()}
+                            {this.loginOnError()}
                             <div className="row">
                                 <div className="col-md-12">
                                     <label htmlFor="email">
@@ -79,7 +78,7 @@ class Login extends Component {
                             <div className="row">
                                 <div className="col-md-3">
                                     <br />
-                                    <button onClick={this.loginClicked.bind(this)} className="btn btn-primary"  ><i ></i>Login</button>
+                                    <button onClick={this.loginOnClicked.bind(this)} className="btn btn-primary"  ><i ></i>Login</button>
                                 </div>
                             </div>
                         </div>

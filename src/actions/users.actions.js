@@ -1,19 +1,17 @@
 import types from "./actionTypes";
-export function dispatchLogin(user)
-{
+export function dispatchLogin(user) {
     return dispatch => {
         dispatch({
-            type : types.LOG_USER_IN,
+            type: types.LOG_USER_IN,
             user
         });
     }
 }
 
-export function dispatchLogout()
-{
+export function dispatchLogout() {
     return dispatch => {
         dispatch({
-            type : types.LOG_USER_OUT
+            type: types.LOG_USER_OUT
         });
     }
 }

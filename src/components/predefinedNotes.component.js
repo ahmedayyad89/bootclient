@@ -1,58 +1,57 @@
 import React, { Component } from "react";
-//import {getAllNotes} from "../services/note.service";
-import { getAllPreDefs, saveAllPreDefs } from "../services/predefnotes.service";
+import { getAllPredefinedNotes, saveAllPredefinedNotes } from "../services/predefnotes.service";
 import { connect } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
-class PreDefNotes extends Component {
+class predefinedNotes extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            predef: [],
+            predefinedNotes: [],
             noUser: false
         }
 
     }
     componentWillMount() {
-
-        getAllPreDefs().then(res => {
-            this.setState({ predef: res.data });
-        }).catch(err => { });
+        getAllPredefinedNotes().then(res => {
+            this.setState({ predefinedNotes: res.data });
+        })
 
     }
 
     updateClicked(e) {
         e.preventDefault();
-        saveAllPreDefs(this.state.predef).then(res => {
+        saveAllPredefinedNotes(this.state.predefinedNotes).then(res => {
             this.setState(res.data);
         }).catch(err => { })
     }
 
     makeBindingMethods() {
-        let bindingMethodsHolder = this.state.predef.map((predef, index) => {
+        let bindingMethodsHolder = this.state.predefinedNotes.map((predef, index) => {
             return ((e) => {
-                let notes = this.state.predef;
+                let notes = this.state.predefinedNotes;
                 notes[index].message = e.target.value;
-                this.setState({ predef: notes });
+                this.setState({ predefinedNotes: notes });
             })
         });
         this.setState({ bindingMethods: bindingMethodsHolder })
 
     }
 
-    renderPredefs() {
-        if (this.state.predef.length >0 
-            && (this.state.bindingMethods === undefined || this.state.bindingMethods.length !== this.state.predef.length)) {
+    renderPredefinedNotes() {
+        if (this.state.predefinedNotes.length > 0
+            && (this.state.bindingMethods === undefined || this.state.bindingMethods.length !== this.state.predefinedNotes.length)) {
             this.makeBindingMethods();
         }
-        return this.state.predef.map((predef, index) => {
+        return this.state.predefinedNotes.map((predef, index) => {
             return (
                 <div className="row" key={index}>
                     <div className="col-md-12">
 
                         <label htmlFor={index.toString()} >
-                            {this.state.predef[index].minimumTemperature} - {this.state.predef[index].maximumTemperature}
+                            {this.state.predefinedNotes[index].minimumTemperature} - {this.state.predefinedNotes[index].maximumTemperature}
                         </label>
-                        <input type="text" name={index.toString()} className="form-control" value={this.state.predef[index].message} onChange={this.state.bindingMethods[index].bind(this)} />
+                        <input type="text" name={index.toString()} className="form-control" value={this.state.predefinedNotes[index].message} 
+                        onChange={this.state.bindingMethods[index].bind(this)} />
                     </div>
                 </div>
             )
@@ -82,7 +81,7 @@ class PreDefNotes extends Component {
                 <div className="panel-body">
                     <form>
                         <div className="form-group">
-                            {this.renderPredefs()}
+                            {this.renderPredefinedNotes()}
                             <div className="row">
                                 <div className="col-md-3">
                                     <br />
@@ -105,4 +104,4 @@ function mapGlobalStateToProps(globalState) {
         globalState: globalState.user
     };
 }
-export default connect(mapGlobalStateToProps, {})(PreDefNotes);
+export default connect(mapGlobalStateToProps, {})(predefinedNotes);

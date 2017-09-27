@@ -1,19 +1,19 @@
 import { register } from "../services/register.service";
 import { login } from "../services/login.service";
 import React, { Component } from "react";
-import {connect} from "react-redux";
-import {dispatchLogin} from "../actions/users.actions"
-import {Redirect} from "react-router-dom";
+import { connect } from "react-redux";
+import { dispatchLogin } from "../actions/users.actions"
+import { Redirect } from "react-router-dom";
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name:"",
+            name: "",
             email: "",
             password: "",
             mobileNumber: "",
-            redirect : "", 
-            registerationFailed:false
+            redirect: "",
+            registerationFailed: false
         }
     }
     emailChanged(e) {
@@ -25,36 +25,31 @@ class Register extends Component {
     mobileNumberChanged(e) {
         this.setState({ mobileNumber: e.target.value })
     }
-    nameChanged(e)
-    {
+    nameChanged(e) {
         this.setState({ name: e.target.value })
     }
     registerClicked(e) {
         e.preventDefault();
         register({
-            name:this.state.name,
-            email : this.state.email, 
-            password:this.state.password, 
-            mobileNumber:this.state.mobileNumber
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password,
+            mobileNumber: this.state.mobileNumber
         }).then(res => {
             login({ username: this.state.email, password: this.state.password })
                 .then(res => {
                     this.props.dispatchLogin(res.data);
                     window.localStorage.setItem('user', JSON.stringify(res.data));
                     window.localStorage.setItem('auth', res.config.headers.Authorization);
-                    this.setState({redirect : "dayweather"});
+                    this.setState({ redirect: "dayweather" });
                 })
-                .catch(err => {console.log(err)})
 
-        }).catch(err=>{
-            console.log(err.response)
-
-            this.setState({registerationFailed:true})
+        }).catch(err => {
+            this.setState({ registerationFailed: true })
         })
 
     }
-    renderFailure()
-    {
+    renderFailure() {
         if (this.state.registerationFailed === true) {
             return (
                 <div className="row">
@@ -66,10 +61,9 @@ class Register extends Component {
         }
     }
     render() {
-        if(this.state.redirect === "dayweather")
-        {
+        if (this.state.redirect === "dayweather") {
             return (
-                <Redirect to="/dayweather"/>
+                <Redirect to="/dayweather" />
             )
         }
         return (
@@ -82,15 +76,15 @@ class Register extends Component {
                         <div className="form-group">
                             {this.renderFailure()}
                             <div className="row">
-                            <div className="col-md-12">
+                                <div className="col-md-12">
                                     <label htmlFor="name">
                                         Name
                     </label>
                                     <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.nameChanged.bind(this)} >
                                     </input>
                                 </div>
-                                </div>
-                                <div className="row">
+                            </div>
+                            <div className="row">
                                 <div className="col-md-12">
                                     <label htmlFor="email">
                                         Email
@@ -100,7 +94,7 @@ class Register extends Component {
                                 </div>
                             </div>
                             <div className="row">
-                            <div className="col-md-12">
+                                <div className="col-md-12">
                                     <label htmlFor="password">
                                         Password
                     </label>
@@ -109,7 +103,7 @@ class Register extends Component {
                                 </div>
                             </div>
                             <div className="row">
-                            <div className="col-md-12">
+                                <div className="col-md-12">
                                     <label htmlFor="mobileNumber">
                                         Mobile Number
                     </label>

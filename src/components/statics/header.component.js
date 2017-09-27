@@ -5,23 +5,17 @@ import { connect } from "react-redux";
 import { dispatchLogout, dispatchLogin } from "../../actions/users.actions";
 import axios from "axios";
 class HeaderComponent extends Component {
-
-
-
     logoutClicked(e) {
         logout().then(res => {
             /**Proof of concept, don't want it in the actual demo */
             window.localStorage.removeItem('user');
             window.localStorage.removeItem('auth');
-            //axios.defaults.headers.common['Authorization'] = null;
-         }).catch(err => console.log(err));
+        })
         this.props.dispatchLogout();
     }
     componentWillMount() {
         var user = window.localStorage.getItem('user');
         var authToken = window.localStorage.getItem('auth');
-        console.log(user);
-        console.log(authToken);
         if (user !== null) {
             this.props.dispatchLogin(JSON.parse(user));
         }
