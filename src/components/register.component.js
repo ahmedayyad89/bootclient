@@ -13,6 +13,7 @@ class Register extends Component {
             password: "",
             mobileNumber: "",
             redirect: "",
+            errors:{},
             registerationFailed: false
         }
     }
@@ -27,6 +28,15 @@ class Register extends Component {
     }
     nameChanged(e) {
         this.setState({ name: e.target.value })
+    }
+    makeErrors(subErrors)
+    {
+        subErrors.forEach((subError)=>{
+            let errors = this.state.errors
+            errors[subError.field] = subError.message
+            this.setState({errors: errors});
+            return subError.field;
+        })
     }
     registerClicked(e) {
         e.preventDefault();
@@ -46,6 +56,9 @@ class Register extends Component {
 
         }).catch(err => {
             this.setState({ registerationFailed: true })
+
+            ///console.log(err.response);
+            this.makeErrors(err.response.data.subErrors)
         })
 
     }
@@ -80,8 +93,9 @@ class Register extends Component {
                                     <label htmlFor="name">
                                         Name
                     </label>
-                                    <input type="text" className="form-control" name="name" value={this.state.name} onChange={this.nameChanged.bind(this)} >
+                                    <input type="text" style={(this.state.errors.name !== undefined)? {borderColor: 'red'}:{}} className="form-control" name="name" value={this.state.name} onChange={this.nameChanged.bind(this)} >
                                     </input>
+                                    {(this.state.errors.name !== undefined)?(<span style={{color:'red'}} >{this.state.errors.name}</span>):null}
                                 </div>
                             </div>
                             <div className="row">
@@ -89,8 +103,9 @@ class Register extends Component {
                                     <label htmlFor="email">
                                         Email
                     </label>
-                                    <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.emailChanged.bind(this)} >
+                                    <input type="email" className="form-control" style={(this.state.errors.email !== undefined)? {borderColor: 'red'}:{}} name="email" value={this.state.email} onChange={this.emailChanged.bind(this)} >
                                     </input>
+                                    {(this.state.errors.email !== undefined)?(<span style={{color:'red'}} >{this.state.errors.email}</span>):null}
                                 </div>
                             </div>
                             <div className="row">
@@ -98,8 +113,9 @@ class Register extends Component {
                                     <label htmlFor="password">
                                         Password
                     </label>
-                                    <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.passwordChanged.bind(this)} >
+                                    <input type="password" className="form-control" style={(this.state.errors.password !== undefined)? {borderColor: 'red'}:{}} name="password" value={this.state.password} onChange={this.passwordChanged.bind(this)} >
                                     </input>
+                                    {(this.state.errors.password !== undefined)?(<span style={{color:'red'}} >{this.state.errors.password}</span>):null}
                                 </div>
                             </div>
                             <div className="row">
@@ -107,8 +123,10 @@ class Register extends Component {
                                     <label htmlFor="mobileNumber">
                                         Mobile Number
                     </label>
-                                    <input type="text" className="form-control" name="mobileNumber" value={this.state.mobileNumber} onChange={this.mobileNumberChanged.bind(this)} >
+                                    <input type="text" className="form-control" style={(this.state.errors.mobileNumber !== undefined)? {borderColor: 'red'}:{}} name="mobileNumber" value={this.state.mobileNumber} onChange={this.mobileNumberChanged.bind(this)} >
+                                    
                                     </input>
+                                    {(this.state.errors.mobileNumber !== undefined)?(<span style={{color:'red'}} >{this.state.errors.mobileNumber}</span>):null}
                                 </div>
                             </div>
                             <div className="row">
