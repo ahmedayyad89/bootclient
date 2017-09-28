@@ -56,8 +56,6 @@ class Register extends Component {
 
         }).catch(err => {
             this.setState({ registerationFailed: true })
-
-            ///console.log(err.response);
             this.makeErrors(err.response.data.subErrors)
         })
 
