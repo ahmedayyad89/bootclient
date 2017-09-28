@@ -31,7 +31,7 @@ class predefinedNotes extends Component {
                 let notes = this.state.predefinedNotes;
                 notes[index].message = e.target.value;
                 this.setState({ predefinedNotes: notes });
-            }).bind(this);
+            });
         });
         this.setState({ bindingMethods: bindingMethodsHolder })
 
