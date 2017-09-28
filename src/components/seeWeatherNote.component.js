@@ -81,9 +81,6 @@ class SeeWeatherNote extends Component {
                 </div>
             );
         }
-        let style = {
-            "font-weight":"bold"
-        }
         return (
             <div>
                 <h1>{(new Date(this.state.dayNote.date)).toDateString()}</h1>
