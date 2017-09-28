@@ -76,21 +76,41 @@ class SeeWeatherNote extends Component {
         if (this.state.loaded !== true) {
             return (
                 <div>
-                    {/* <img src="../../logo.svg"/> */}
                     <h1>Loading...</h1>
                 </div>
             );
+        }
+        let style = {
+            "font-weight":"bold"
         }
         return (
             <div>
                 <h1>{(new Date(this.state.dayNote.date)).toDateString()}</h1>
                 {this.renderNote()}
-                <h3>Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp).toPrecision(4)}</h3>
-                <h3>Pressure: </h3><h3>{this.state.dayNote.weatherModel.pressure}</h3>
-                <h3>Humidity: </h3><h3>{this.state.dayNote.weatherModel.humidity}</h3>
-                <h3>Minimum - Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp_min).toPrecision(4)}</h3>
-                <h3>Maximum - Temperature: </h3><h3>{(this.state.dayNote.weatherModel.temp_max).toPrecision(4)}</h3>
-
+                <table className="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td style={{fontWeight:'bold' , color:'black' , fontSize:'20px'}}>Temperature: </td>
+                            <td style={{fontWeight:'bold' , color:'red' , fontSize:'15px'}}>{(this.state.dayNote.weatherModel.temp).toPrecision(4)}<span> </span>&#8451;</td>
+                        </tr>
+                        <tr>
+                            <td style={{fontWeight:'bold' , color:'black' , fontSize:'20px'}}>Pressure: </td>
+                            <td style={{fontWeight:'bold' , color:'red' , fontSize:'15px'}}>{this.state.dayNote.weatherModel.pressure}</td>
+                        </tr>
+                        <tr>
+                            <td style={{fontWeight:'bold' , color:'black' , fontSize:'20px'}}>Humidity: </td>
+                            <td style={{fontWeight:'bold' , color:'red' , fontSize:'15px'}}>{this.state.dayNote.weatherModel.humidity}</td>
+                        </tr>
+                        <tr>
+                            <td style={{fontWeight:'bold' , color:'black' , fontSize:'20px'}}>Minimum - Temperature: </td>
+                            <td style={{fontWeight:'bold' , color:'red' , fontSize:'15px'}}>{(this.state.dayNote.weatherModel.temp_min).toPrecision(4)}<span> </span>&#8451;</td>
+                        </tr>
+                        <tr>
+                            <td style={{fontWeight:'bold' , color:'black' , fontSize:'20px'}}>Maximum - Temperature: </td>
+                            <td style={{fontWeight:'bold' , color:'red' , fontSize:'15px'}}>{(this.state.dayNote.weatherModel.temp_max).toPrecision(4)}<span> </span>&#8451;</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         );
     }
