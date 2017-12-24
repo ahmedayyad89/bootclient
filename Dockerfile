@@ -1,4 +1,4 @@
-FROM node@sha256:8b8c1cb9a647587dc4fa21b4a857352e67a9e8ae623e29841d6672f2fb56255b
+FROM node:8.9.0
 RUN mkdir -p /usr/src/app
 RUN chmod 777 /usr/src/app
 WORKDIR /usr/src/app
