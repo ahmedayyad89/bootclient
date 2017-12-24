@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:8080/"
+const BASE_URL = "http://bootapi/"
 
 export function getAllPredefinedNotes() {
     return axios.get(BASE_URL + "admin/predefnotes/get", {

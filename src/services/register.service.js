@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:8080/save/user"
+const BASE_URL = "http://bootapi/save/user"
 
 export function register(userData) {
     return axios.post(BASE_URL, userData, {
