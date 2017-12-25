@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "http://bootapi/"
+const BASE_URL = "http://bootapi.kmt.orange.com/"
 
 export function getTodaysNote() {
     return axios.get(BASE_URL + "user/note/date", {
