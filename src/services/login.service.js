@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "https://bootapi.kmt.orange.com/user"
+const BASE_URL = "https://bootapisecured.kmt.orange.com/user"
 
 export function login(credentials) {
     return axios.get(BASE_URL + "/login", {

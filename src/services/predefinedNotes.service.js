@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "https://bootapi.kmt.orange.com/"
+const BASE_URL = "https://bootapisecured.kmt.orange.com/"
 
 export function getAllPredefinedNotes() {
     return axios.get(BASE_URL + "admin/predefnotes/get", {

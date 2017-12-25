@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "https://bootapi.kmt.orange.com/save/user"
+const BASE_URL = "https://bootapisecured.kmt.orange.com/save/user"
 
 export function register(userData) {
     return axios.post(BASE_URL, userData, {
